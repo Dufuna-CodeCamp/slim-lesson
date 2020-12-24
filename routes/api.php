@@ -20,7 +20,8 @@ $app->group('/api', function (RouteCollectorProxy $group) {
 
     $group->get('/test-users', TestUserController::class.':index');
     $group->get('/test-users/{id}', TestUserController::class.':findById');
-    $group->post('/test-users', TestUserController::class.':create');
+    $group->post('/test-users', TestUserController::class.':create')
+        ->add(new JsonBodyParserMiddleware());;
     $group->put('/test-users/{id}', TestUserController::class.':update')
         ->add(new JsonBodyParserMiddleware());
     $group->delete('/test-users/{id}', TestUserController::class .':delete');

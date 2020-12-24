@@ -11,6 +11,7 @@ class TestUserController
     public function index(Request $request, Response $response, $args)
     {
         $users = User::all();
+
         $response->getBody()->write($users->toJson());
         return $response->withHeader('Content-Type', 'application/json')
             ->withStatus(200);
@@ -19,7 +20,13 @@ class TestUserController
     public function findById(Request $request, Response $response, $args)
     {
         $id = $args['id'];
+
         $user = User::find($id);
+        if (!$user) {
+            $response->getBody()->write(json_encode([ 'error' => 'User not found' ]));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
+        }
+
         $response->getBody()->write($user->toJson());
         return $response->withHeader('Content-Type', 'application/json')
             ->withStatus(200);
@@ -35,8 +42,10 @@ class TestUserController
             'gender' => $data['gender'],
             "created_at" => $createdAt
         ]);
-       $user->save();
-       $response->getBody()->write($user->toJson());
+
+        $user->save();
+        
+        $response->getBody()->write($user->toJson());
         return $response->withHeader('Content-Type', 'application/json')
             ->withStatus(200);
     }
@@ -45,9 +54,17 @@ class TestUserController
     {
         $data = $request->getParsedBody();
         $id = $args['id'];
+
         $user = User::find($id);
+        if (!$user) {
+            $response->getBody()->write(json_encode([ 'error' => 'User not found' ]));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
+        }
+
         $user->name = $data['name'];
+
         $user->save();
+
         $response->getBody()->write($user->toJson());
         return $response->withHeader('Content-Type', 'application/json')
             ->withStatus(200);
@@ -56,8 +73,15 @@ class TestUserController
     public function delete(Request $request, Response $response, $args)
     {
         $id = $args['id'];
+        
         $user = User::find($id);
+        if (!$user) {
+            $response->getBody()->write(json_encode([ 'error' => 'User not found' ]));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
+        }
+    
         $user->delete();
+
         $response->getBody()->write('User deleted successfully');
         return $response->withHeader('Content-Type', 'application/json')
             ->withStatus(200);
