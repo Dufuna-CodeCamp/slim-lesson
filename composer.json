@@ -1,4 +1,6 @@
 {
+    "name": "dufuna/slim-api",
+    "description": "Simple API with Slim",
     "require": {
         "slim/slim": "4.*",
         "slim/psr7": "^1.3",
