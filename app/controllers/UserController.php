@@ -15,7 +15,7 @@ class UserController
 
     public function __construct()
     {
-        $this->db = (new DB())->DBConnect();
+        $this->db = (new DB())->connect();
     }
 
     public function index(Request $request, Response $response, $args)
