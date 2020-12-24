@@ -5,10 +5,10 @@ namespace DB;
 use PDO;
 
 class DB {
-    protected $db_hostname;
-    protected $db_username;
-    protected $db_password;
-    protected $db_name;
+    private $db_hostname;
+    private $db_username;
+    private $db_password;
+    private $db_name;
 
     public function __construct()
     {
