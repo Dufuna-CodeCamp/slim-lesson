@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Model\User;
 use DB\DB;
 use PDO;
 use PDOException;
@@ -28,7 +27,7 @@ class UserController
             return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
         } catch (PDOException $ex) {
             $response->getBody()->write(json_encode(["error" => $ex->getMessage()]));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
         }
     }
 
@@ -50,7 +49,7 @@ class UserController
             return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
         } catch (PDOException $ex) {
             $response->getBody()->write(json_encode(["error" => $ex->getMessage()]));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
         }
     }
 
@@ -61,7 +60,7 @@ class UserController
         $email = $requestData['email'];
         $gender = $requestData['gender'];
         $createdAt = date('Y-m-d H:i:s');
-        
+
         $sql = "INSERT INTO users (name, email, gender, created_at) VALUES (:name, :email, :gender, :created_at)";
 
         try {
@@ -76,7 +75,7 @@ class UserController
             return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
         } catch (PDOException $ex) {
             $response->getBody()->write(json_encode(["error" => $ex->getMessage()]));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
         }
     }
 
@@ -96,7 +95,7 @@ class UserController
             return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
         } catch (PDOException $ex) {
             $response->getBody()->write(json_encode(["error" => $ex->getMessage()]));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
         }
     }
 
@@ -111,7 +110,7 @@ class UserController
             return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
         } catch (PDOException $ex) {
             $response->getBody()->write(json_encode(["error" => $ex->getMessage()]));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
         }
     }
 }
