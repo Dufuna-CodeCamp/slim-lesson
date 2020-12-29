@@ -23,7 +23,7 @@ class UserController
         try {
             $query = $this->db->prepare("SELECT * FROM users");
             $query->execute();
-            $users = $query->fetchAll(PDO::FETCH_OBJ);
+            $users = $query->fetchAll();
             $response->getBody()->write(json_encode($users));
             return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
         } catch (PDOException $ex) {
@@ -32,20 +32,21 @@ class UserController
         }
     }
 
-    public function show(Request $request, Response $response, $args)
+    public function getUser(Request $request, Response $response, $args)
     {
         $id = $args['id'];
         try {
-            $query = $this->db->prepare("SELECT * FROM users WHERE id = $id");
+            $query = $this->db->prepare("SELECT * FROM users WHERE id = :id");
+            $query->bindParam(":id", $id);
             $query->execute();
-            $users = $query->fetchAll(PDO::FETCH_OBJ);
+            $user = $query->fetch();
 
-            if (!$users) {
+            if (!$user) {
                 $response->getBody()->write(json_encode(["error" => "User not found"]));
                 return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
             }
 
-            $response->getBody()->write(json_encode($users));
+            $response->getBody()->write(json_encode($user));
             return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
         } catch (PDOException $ex) {
             $response->getBody()->write(json_encode(["error" => $ex->getMessage()]));
@@ -55,10 +56,12 @@ class UserController
 
     public function create(Request $request, Response $response, $args)
     {
-        $fullName = $request->getParsedBody()['name'];
-        $email = $request->getParsedBody()['email'];
-        $gender = $request->getParsedBody()['gender'];
+        $requestData = $request->getParsedBody();
+        $fullName = $requestData['name'];
+        $email = $requestData['email'];
+        $gender = $requestData['gender'];
         $createdAt = date('Y-m-d H:i:s');
+        
         $sql = "INSERT INTO users (name, email, gender, created_at) VALUES (:name, :email, :gender, :created_at)";
 
         try {

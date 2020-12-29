@@ -9,7 +9,7 @@ $app->group('/api', function (RouteCollectorProxy $group) {
     // Get all Users
     $group->get('/users', UserController::class.':index');
     // Get one user
-    $group->get('/users/{id}', UserController::class.':show');
+    $group->get('/users/{id}', UserController::class.':getUser');
     // Create a user
     $group->post('/users',  UserController::class.':create');
     // Update a user
