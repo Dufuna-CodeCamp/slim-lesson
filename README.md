@@ -14,3 +14,6 @@ composer install
 
 ## Environment Variables
 Make a copy of `.env.example` to `.env` in the root directory. Then fill in your database credentials
+
+## Running the app
+To run the app, open the terminal and run `composer start`
