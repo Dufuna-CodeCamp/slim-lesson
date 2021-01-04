@@ -1,9 +1,10 @@
 # Dufuna-CodeCamp20
-This branch contains code snippet for PHP Slim project
+This repo contains exercise files for the PHP Slim module
 
 ## Requirements
 - PHP
 - Composer
+- MySQL
 
 ## Dependencies 
 
